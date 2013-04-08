@@ -58,7 +58,9 @@ $("#form").submit(function() {
 
         // Funções do jqueryForm
         $(this).ajaxStart(function() {
-            $(focusResponse).html("Aguarde...").show();
+            $(focusResponse).html("<div class='alert alert-info'>\n\
+                                   <button type='button' class='close' data-dismiss='alert'>&times;\n\
+                                   </button><h4><strong>Aguarde!</strong></h4> Os dados estão sendo verificados e submetidos.</div>").show();
         });
 
         // Variáveis

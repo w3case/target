@@ -40,7 +40,7 @@
 
 $route['configuracoes/metas-analytics'] = "configuracoes/metasAnalytics";
 
-$route['default_controller'] = "principal";
+$route['default_controller'] = "autenticacao";
 $route['404_override'] = '';
 
 

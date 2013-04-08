@@ -209,7 +209,7 @@
                     </div> <!-- /span3 -->
 
                     <main id="main" class="span9">
-                        <?php $this->load->view($pagina)?>
+                        <?php $this->load->view($pagina) ?>
                     </main> <!-- /span9 -->				
 
                 </div> <!-- /row -->		
@@ -226,6 +226,7 @@
 
         <script src="../assets/admin/js/jquery-1.7.2.min.js"></script>
         <script src="../assets/admin/js/bootstrap.js"></script>
+        <script src="../assets/admin/js/jqform.js"></script>
         <script src="../assets/admin/js/bootstrap-wysihtml5.js"></script>
 
         <script src="../assets/admin/js/main.js"></script>

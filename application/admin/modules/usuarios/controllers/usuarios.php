@@ -3,47 +3,101 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
+/**
+ * Target
+ *
+ * Sistema CMS W3case Target
+ * Target - Sua melhor solução em manutenção para seu website. Um produto da Agência W3Case
+ *
+ * @package		Target
+ * @author		W3Case Soluções Interativas
+ * @copyright           Copyright (c) 2007 - 2013, W3Case, LTDA.
+ * @license		Todos os direitos reservados a w3case soluções interativas
+ * @link		http://www.w3case.com.br/target
+ * @since		Version 4.0
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
 class Usuarios extends MX_Controller {
+    
+    private $usuario;
+    private $senha;
 
     /**
-     * Index Page for this controller.
+     * Metodo index para inclusão da página principal
      *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
+     * Mapeamento da URL
+     * 		http://example.com/index.php/usuarios
      * 	- or -  
-     * 		http://example.com/index.php/welcome/index
-     * 	- or -
-     * Since this controller is set as the default controller in 
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
+     * 		http://example.com/index.php/usuarios/index
      */
     public function index()
     {
-        $data['pagina'] = "usuarios"; 
+        // Gerar Logs
+//        $this->load->library('my_log');
+//        $logs = new MY_Log();
+//        $logs->setLogPath(APPPATH . "logs/" . $this->session->userdata('nome') . "/");
+//        $logs->write_log('info', "O usuario acessou o cadastre de novos su");
+        
+        $data['pagina'] = "usuarios";
         $this->load->view('principal/principal', $data);
     }
-
+    
+    /**
+     * Metodo index para inclusão da página principal
+     *
+     * Mapeamento da URL
+     * 		http://example.com/index.php/usuarios/cadastrar
+     * 	- or -  
+     * 		http://example.com/index.php/usuarios/cadastrar
+     */
     public function cadastrar()
     {
-        $data['pagina'] = "cadastrar"; 
+        $data['pagina'] = "cadastrar";
         $this->load->view('principal/principal', $data);
     }
 
+    /**
+     * Metodo index para inclusão da página principal
+     *
+     * Mapeamento da URL
+     * 		http://example.com/index.php/usuarios/gerenciar
+     * 	- or -  
+     * 		http://example.com/index.php/usuarios/gerenciar
+     */
     public function gerenciar()
     {
-        $data['pagina'] = "gerenciar"; 
+        $data['pagina'] = "gerenciar";
         $this->load->view('principal/principal', $data);
     }
 
+    /**
+     * Metodo index para inclusão da página principal
+     *
+     * Mapeamento da URL
+     * 		http://example.com/index.php/usuarios/lixeira
+     * 	- or -  
+     * 		http://example.com/index.php/usuarios/lixeira
+     */
     public function lixeira()
     {
-        $data['pagina'] = "lixeira"; 
+        $data['pagina'] = "lixeira";
         $this->load->view('principal/principal', $data);
     }
+    
+    /**
+     * Metodo equivalente ao Set
+     * Recebe os dados e envia para o método que tratará 
+     * os dados do usuário
+     */
+    public function setDados()
+    {
+        $this->usuario = $_POST['usuario'];
+        $this->senha = $_POST['senha'];
+    }
+
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file usuarios.php */
+/* Location: ./application/modules/controllers/usuarios.php */
