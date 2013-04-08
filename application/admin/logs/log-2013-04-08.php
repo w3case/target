@@ -312,3 +312,25 @@ DEBUG - 2013-04-08 15:58:27 --> Database Driver Class Initialized
 ERROR - 2013-04-08 15:59:27 --> Severity: Warning  --> mysql_pconnect(): Can't connect to MySQL server on 'HOSTNAME' (4) /home/w3case/public_html/target-git/system/database/drivers/mysql/mysql_driver.php 91
 ERROR - 2013-04-08 15:59:27 --> Unable to connect to the database
 DEBUG - 2013-04-08 15:59:27 --> Language file loaded: language/english/db_lang.php
+DEBUG - 2013-04-08 19:09:38 --> Config Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Hooks Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Utf8 Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> UTF-8 Support Enabled
+DEBUG - 2013-04-08 19:09:38 --> URI Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Router Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> No URI present. Default controller set.
+DEBUG - 2013-04-08 19:09:38 --> Output Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Security Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Input Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-04-08 19:09:38 --> Language Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Loader Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Helper loaded: url_helper
+DEBUG - 2013-04-08 19:09:38 --> Controller Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Language Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Config Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> Autenticacao MX_Controller Initialized
+DEBUG - 2013-04-08 19:09:38 --> Loader Class Initialized
+DEBUG - 2013-04-08 19:09:38 --> File loaded: ../application/admin/modules/autenticacao/views/login.php
+DEBUG - 2013-04-08 19:09:38 --> Final output sent to browser
+DEBUG - 2013-04-08 19:09:38 --> Total execution time: 0.2424
