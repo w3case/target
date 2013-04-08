@@ -3,9 +3,8 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Autenticacao extends MX_Controller 
-{
-    
+class Autenticacao extends MX_Controller {
+
     // Atributos para validar o login 
     private $usuario;
     private $senha;
@@ -36,16 +35,17 @@ class Autenticacao extends MX_Controller
      * os dados do usuário
      */
     public function setDados()
-    { 
+    {
         $this->usuario = $_POST['usuario'];
         $this->senha = $_POST['senha'];
         $this->verificarDadosUsuario();
     }
-    
+
     /*
      * Método para verificar no banco se existe ou não
      * o usuário especificado no login
      */
+
     private function verificarDadosUsuario()
     {
         // Dados para a autenticação
@@ -55,11 +55,24 @@ class Autenticacao extends MX_Controller
             "lixeira" => 2,
             "senha" => md5($this->anti_injection($this->senha))
         );
-                
+
         // Carregar a classe para manipular os dados no banco
-        $this->load->model("crud"); exit;
+        // Local /application/model/crud.php
+        $this->load->model("crud");
+
+        $parametros = array(
+            "select" => "nome, email, senha",
+            "table" => "usuarios",
+            "where" => $dados_login,
+            "order_by" => "",
+            "group_by" => "",
+            "limit" => "",
+            "like" => "",
+            "join" => ""
+        );
+
+        $retorno = $this->crud->select($parametros, false); 
         
-        $retorno = $this->crud->mostrar_onde("usuarios", $dados_login);
         if ($retorno)
         {
             // Logs do sistema
@@ -129,25 +142,25 @@ class Autenticacao extends MX_Controller
                 'data_acesso' => date("Y-m-d H:i:s")
             );
             $this->crud->atualizar('usuarios', 'id', $dados);
-            
+
             // Verificar login
             $version = $this->crud->mostrar("version");
-            
+
             if ($version[0]->version != $version[0]->version_atual && $retorno[0]->tipo <= 2)
             {
                 print "<script>self.location = '" . base_url() . "admin.php/atualizar_sistema'</script>";
-            } 
+            }
             else
             {
                 print "<script>self.location = '" . base_url() . "admin.php/principal'</script>";
-            }            
+            }
         }
         else
         {
             echo "Usuário inexistente.";
         }
     }
-    
+
     // remove palavras que contenham sintaxe sql
     private function anti_injection($sqlinj)
     {
