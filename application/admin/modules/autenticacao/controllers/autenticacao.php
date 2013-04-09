@@ -38,14 +38,14 @@ class Autenticacao extends MX_Controller {
     {
         $this->usuario = $_POST['usuario'];
         $this->senha = $_POST['senha'];
-        $this->autenticarDadosUsuário();
+        $this->autenticarDadosUsuario();
     }
 
     /*
      * Método para verificar no banco se existe ou não
      * o usuário especificado no login
      */
-    private function autenticarDadosUsuário()
+    private function autenticarDadosUsuario()
     {
         // Dados para a autenticação
         $dados_login = array(
@@ -88,11 +88,11 @@ class Autenticacao extends MX_Controller {
             // Caso o usuário seja Master
             if ($retorno[0]->tipo == 1)
             {
-                /*
-                 * Parämetro para a seleção dos menus que serão 
+                /**
+                 * Parâmetro para a seleção dos menus que serão 
                  * visíveis pelo usuário
                  */
-                $parametros = array(
+                $parametros = array (
                     "select" => "*",
                     "table" => "menu",
                     "where" => "",
@@ -112,7 +112,7 @@ class Autenticacao extends MX_Controller {
                 }
 
                 // Dados para autenticação
-                $array = array(
+                $array = array (
                     'logado' => true,
                     'id_usuario' => $retorno[0]->id,
                     'email' => $retorno[0]->email,
