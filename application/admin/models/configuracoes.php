@@ -1,4 +1,7 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 /**
  * Target
@@ -19,8 +22,7 @@
 /*
  * Classe para retorno de configurações do banco 
  */
-class Configuracoes extends CI_Model
-{
+class Configuracoes extends CI_Model {
 
     public function __construct()
     {
@@ -31,17 +33,20 @@ class Configuracoes extends CI_Model
     /*
      * Retorna a versão do sistema instalado
      */
+
     public function getVersion()
     {
         $query = $this->db->query("SELECT * FROM version");
         return $query->result();
     }
-    
-//    public function Dados()
-//    {
-//        $query = $this->db->query("SELECT * FROM configuracoes");
-//        return $query->result();
-//    }
+
+    // Retorna os dados das configurações do sistema
+    public function getDados($idConfiguracao)
+    {
+        $query = $this->db->query("SELECT * FROM config where idConfiguracao = '$idConfiguracao'");
+        return $query->result();
+    }
+
 //
 //    public function Atualizar_version($versao)
 //    {

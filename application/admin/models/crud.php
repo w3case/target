@@ -275,6 +275,36 @@ class Crud extends CI_Model
         }
     }
     
+    /*
+     * Simple Select Data
+     * Méthodo  resposável por selecionar dados no banco a partir dos 
+     * parâmetros repassados
+     * 
+     * @param array
+     * @param array
+     * @return object
+     * 
+     * Para mais informaçõs verificar a documentação do Codeigniter
+     * http://codeigniter.com/user_guide/database/active_record.html#select
+     * 
+     * Ao contrário do select anterior este é bem simples
+     * EXEMPLO DE USO COM PARAMETRO (Retirado da documentação do FW)
+     * 
+     * $this->db->select('mytable', array('id' => $id));
+     * // Produces:
+     * // DELETE FROM mytable
+     * // WHERE id = $id
+     * 
+     * Caso o ID não exista no segundo parâmetro o delete será feito na tabela completa
+     * 
+     */
+    
+    public function simpleSelect($table, $array)
+    {
+        $query = $this->db->get_where($table, $array);
+        return $query->result();
+    }
+    
     /**
      * Metodos para fechar conexao
      */

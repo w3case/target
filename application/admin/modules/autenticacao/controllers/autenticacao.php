@@ -176,11 +176,11 @@ class Autenticacao extends MX_Controller {
              */
             if ($versaoSistema[0]->version != $versaoSistema[0]->version_atual && $retorno[0]->tipo <= 2)
             {
-                print "<script>self.location = '" . base_url() . "admin.php/atualizar_sistema'</script>";
+                print "<script>self.location = '" . base_url() . "atualizacoes'</script>";
             }
             else
             {
-                print "<script>self.location = '" . base_url() . "admin.php/principal'</script>";
+                print "<script>self.location = '" . base_url() . "principal'</script>";
             }
         }
         else
