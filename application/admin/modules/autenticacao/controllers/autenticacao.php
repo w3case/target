@@ -38,15 +38,14 @@ class Autenticacao extends MX_Controller {
     {
         $this->usuario = $_POST['usuario'];
         $this->senha = $_POST['senha'];
-        $this->verificarDadosUsuario();
+        $this->autenticarDadosUsuário();
     }
 
     /*
      * Método para verificar no banco se existe ou não
      * o usuário especificado no login
      */
-
-    private function verificarDadosUsuario()
+    private function autenticarDadosUsuário()
     {
         // Dados para a autenticação
         $dados_login = array(
@@ -60,8 +59,9 @@ class Autenticacao extends MX_Controller {
         // Local /application/model/crud.php
         $this->load->model("crud");
 
+        // Parämetro para a seleção do usuário
         $parametros = array(
-            "select" => "nome, email, senha",
+            "select" => "*",
             "table" => "usuarios",
             "where" => $dados_login,
             "order_by" => "",
@@ -71,36 +71,42 @@ class Autenticacao extends MX_Controller {
             "join" => ""
         );
 
-        $retorno = $this->crud->select($parametros, false); 
-        
+        // Retorna os dados do usuário
+        $retorno = $this->crud->select($parametros, false);
+
         if ($retorno)
         {
-            // Logs do sistema
-            $this->load->library('logs');
-            $config = array(
-                'path' => 'application/admin/logs/' . $retorno[0]->nome . '/',
-                'tipo' => 'xml',
-                'arquivo' => date('d-m-Y')
-            );
-            $this->logs->inicialize($config);
-            $this->logs->Gerarlog('O usuario ' . $retorno[0]->nome . ' acessou o sistema com a senha ' . $_POST['senha']);
-
             // Atualiza versao no banco
             $versao = Version();
             $this->load->model('configuracoes');
             if ($versao[0]->cod)
             {
-                $this->configuracoes->atualizar_version($versao[0]->cod);
+                // Executa o update para atualizar a versão do sistema
+                $this->crud->update("version", $id_name = "", array("version" => "$versao[0]->cod"));
             }
 
-            //tema
-            $tema = $this->configuracoes->tema();
-
+            // Caso o usuário seja Master
             if ($retorno[0]->tipo == 1)
             {
+                /*
+                 * Parämetro para a seleção dos menus que serão 
+                 * visíveis pelo usuário
+                 */
+                $parametros = array(
+                    "select" => "*",
+                    "table" => "menu",
+                    "where" => "",
+                    "order_by" => "",
+                    "group_by" => "",
+                    "limit" => "",
+                    "like" => "",
+                    "join" => ""
+                );
+
                 // Verifica se o usuário é master
-                $permissao_master = $this->crud->mostrar("menu");
-                foreach ($permissao_master as $pm)
+                $menu = "";
+                $permissaoMaster = $this->crud->select($parametros);
+                foreach ($permissaoMaster as $pm)
                 {
                     $menu .= $pm->menuId . ",";
                 }
@@ -109,11 +115,9 @@ class Autenticacao extends MX_Controller {
                 $array = array(
                     'logado' => true,
                     'id_usuario' => $retorno[0]->id,
-                    'usuario' => $retorno[0]->usuario,
                     'email' => $retorno[0]->email,
                     'nome' => $retorno[0]->nome,
                     'data' => $retorno[0]->data_acesso,
-                    'tema' => $tema[0]->tema,
                     'menu' => explode(',', $menu),
                     'tipo' => $retorno[0]->tipo
                 );
@@ -124,15 +128,15 @@ class Autenticacao extends MX_Controller {
                 $array = array(
                     'logado' => true,
                     'id_usuario' => $retorno[0]->id,
-                    'usuario' => $retorno[0]->usuario,
                     'email' => $retorno[0]->email,
                     'nome' => $retorno[0]->nome,
                     'data' => $retorno[0]->data_acesso,
-                    'tema' => $tema[0]->tema,
                     'menu' => explode(',', $retorno[0]->permissoes),
                     'tipo' => $retorno[0]->tipo
                 );
             }
+
+            // Cria a sessão para o usuário logado
             $this->session->set_userdata($array);
 
             // Gravar no banco a data e o ip de acesso
@@ -141,12 +145,36 @@ class Autenticacao extends MX_Controller {
                 "ip_acesso" => $_SERVER['REMOTE_ADDR'],
                 'data_acesso' => date("Y-m-d H:i:s")
             );
-            $this->crud->atualizar('usuarios', 'id', $dados);
+            $this->crud->update('usuarios', 'id', $dados);
 
-            // Verificar login
-            $version = $this->crud->mostrar("version");
+            /*
+             * Parämetro para a seleção da versao do sistema
+             */
+            $parametros = array(
+                "select" => "*",
+                "table" => "version",
+                "where" => "",
+                "order_by" => "",
+                "group_by" => "",
+                "limit" => "",
+                "like" => "",
+                "join" => ""
+            );
 
-            if ($version[0]->version != $version[0]->version_atual && $retorno[0]->tipo <= 2)
+            // Gerar Logs
+            $this->load->library('my_log');
+            $logs = new MY_Log();
+            $logs->setLogPath(APPPATH . "logs/" . $retorno[0]->nome . "/");
+            $logs->write_log('info', "O usuario logou no sistema");
+
+            $versaoSistema = $this->crud->select($parametros);
+
+            /*
+             * Verifica a versão é redireciona o usuário
+             * Caso versão desatualizada, direcionada à area de atualização
+             * Caso versão atualizada, direciona à area principal
+             */
+            if ($versaoSistema[0]->version != $versaoSistema[0]->version_atual && $retorno[0]->tipo <= 2)
             {
                 print "<script>self.location = '" . base_url() . "admin.php/atualizar_sistema'</script>";
             }
@@ -157,7 +185,10 @@ class Autenticacao extends MX_Controller {
         }
         else
         {
-            echo "Usuário inexistente.";
+            echo '<div class="alert alert-error">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <h4>Erro!</h4>Usuário não cadastrado no sistema
+                  </div>';
         }
     }
 
