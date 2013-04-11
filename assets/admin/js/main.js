@@ -61,7 +61,7 @@ $("#form").submit(function() {
             $(focusResponse).html("<div class='alert alert-info'>\n\
                                    <button type='button' class='close' data-dismiss='alert'>&times;\n\
                                    </button><h4><strong>Aguarde!</strong></h4> Os dados estão sendo verificados e submetidos.</div>").show();
-            setTimeout( "jQuery('.alert').fadeOut();", 3000);
+            setTimeout("jQuery('.alert').fadeOut();", 3000);
         });
 
         // Variáveis
@@ -86,3 +86,15 @@ $("#form").submit(function() {
     }
 })
 //})
+
+/*
+ * Mascara para campos Inputs
+ * Masked Input plugin for jQuery
+ * Copyright (c) 2007-2013 Josh Bush (digitalbush.com)
+ * Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
+ * Version: 1.3.1
+ */
+
+jQuery(function($){
+   $("#cpfMask").mask("999.999.999-99");
+});

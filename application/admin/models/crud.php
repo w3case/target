@@ -116,11 +116,20 @@ class Crud extends CI_Model
         {
             $this->db->like($parametros['like']);
         }
+        
+        // Ordena os resultado segundo o parâmetro passado
+        if ($parametros['orlike'])
+        {
+            $this->db->or_like($parametros['orlike']);
+        }
 
         // Retorna os resultado limitados ao parâmetro passado
         if ($parametros['limit'])
         {
-            $this->db->limit($parametros['limit']);
+            foreach ($parametros['limit'] as $key => $value)
+            {
+                $this->db->limit($key, $value);
+            }
         }
 
         // Retorna os resultado limitados ao parâmetro passado

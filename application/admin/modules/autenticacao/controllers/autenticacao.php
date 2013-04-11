@@ -45,6 +45,7 @@ class Autenticacao extends MX_Controller {
      * Método para verificar no banco se existe ou não
      * o usuário especificado no login
      */
+
     private function autenticarDadosUsuario()
     {
         // Dados para a autenticação
@@ -64,10 +65,11 @@ class Autenticacao extends MX_Controller {
             "select" => "*",
             "table" => "usuarios",
             "where" => $dados_login,
-            "order_by" => "",
-            "group_by" => "",
-            "limit" => "",
             "like" => "",
+            "limit" => "",
+            "order_by" => "",
+            "orlike" => "",
+            "group_by" => "",
             "join" => ""
         );
 
@@ -92,7 +94,7 @@ class Autenticacao extends MX_Controller {
                  * Parâmetro para a seleção dos menus que serão 
                  * visíveis pelo usuário
                  */
-                $parametros = array (
+                $parametros = array(
                     "select" => "*",
                     "table" => "menu",
                     "where" => "",
@@ -112,7 +114,7 @@ class Autenticacao extends MX_Controller {
                 }
 
                 // Dados para autenticação
-                $array = array (
+                $array = array(
                     'logado' => true,
                     'id_usuario' => $retorno[0]->id,
                     'email' => $retorno[0]->email,
