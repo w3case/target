@@ -61,7 +61,7 @@ $("#form").submit(function() {
             $(focusResponse).html("<div class='alert alert-info'>\n\
                                    <button type='button' class='close' data-dismiss='alert'>&times;\n\
                                    </button><h4><strong>Aguarde!</strong></h4> Os dados estão sendo verificados e submetidos.</div>").show();
-            setTimeout("jQuery('.alert').fadeOut();", 3000);
+            setTimeout("jQuery('#msgout').fadeOut();", 3000);
         });
 
         // Variáveis
@@ -71,7 +71,7 @@ $("#form").submit(function() {
             type: method,
             success: function(resposta) {
                 $(focusResponse).html(resposta).show();
-                setTimeout("jQuery('.alert').fadeOut();", 3000);
+                setTimeout("jQuery('#msgout').fadeOut();", 3000);
             },
             error: function(xhr, textStatus, errorThrown) {
                 $(focusResponse).html(xhr).show();

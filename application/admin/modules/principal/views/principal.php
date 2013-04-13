@@ -88,7 +88,7 @@
                             </li>
 
                             <li>
-                                <a href="configuracoes">
+                                <a href="configuracao">
                                     <i class="icon-wrench"></i>
                                     Configurações 		
                                 </a>

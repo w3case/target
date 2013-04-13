@@ -27,7 +27,7 @@ class Usuarios extends MX_Controller {
     private $cpf;
     private $nivel;
     private $permissoes;
-    
+
     /*
      * Quantidade de registros
      * pagina: gerenciar
@@ -204,24 +204,25 @@ class Usuarios extends MX_Controller {
          * Retorna a quantidade de registros 
          */
         $parametrosCount = array(
-                "select" => "*",
-                "table" => "usuarios",
-                "where" => array("lixeira" => 2),
-                "like" => "",
-                "limit" => "",
-                "order_by" => "",
-                "orlike" => "",
-                "group_by" => "",
-                "join" => ""
-            );
-        
+            "select" => "*",
+            "table" => "usuarios",
+            "where" => array("lixeira" => 2),
+            "like" => "",
+            "limit" => "",
+            "order_by" => "",
+            "orlike" => "",
+            "group_by" => "",
+            "join" => ""
+        );
+
         $qtdRegistros = $this->crud->select($parametrosCount, false);
 
         // Parâmetros para a biblioteca de paginação
         $config['base_url'] = base_url() . $this->uri->segment(1) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/";
         $config['total_rows'] = count($qtdRegistros);
         $config['uri_segment'] = 4;
-        $config['per_page'] = $this->qtdRegistros;;
+        $config['per_page'] = $this->qtdRegistros;
+        ;
         $config['first_tag_open'] = '<li>';
         $config['first_link'] = '<<';
         $config['first_tag_close'] = '</li>';
@@ -259,6 +260,135 @@ class Usuarios extends MX_Controller {
      */
     public function lixeira()
     {
+        // Gerar Logs
+        $this->load->library('my_log');
+        $logs = new MY_Log();
+        $logs->setLogPath(APPPATH . "logs/" . $this->session->userdata('nome') . "/");
+        $logs->write_log('info', "O usuario acessou a área para a listagem dos usuarios na lixeira");
+
+        // Redireciona URL para a busca
+        if (@$_POST["busca"])
+        {
+            redirect('usuarios/gerenciar/' . strtolower(url_title(convert_accented_characters($_POST["busca"]))), 'refresh');
+        }
+
+        /**
+         * Bibliotecas e ajudantes carregados
+         * @filesource system/libraries/pagination.php
+         * @filesource application/model/crud.php
+         */
+        $this->load->library('pagination');
+        $this->load->model("crud");
+
+        /**
+         * Dados passados por Get, para busca
+         * Se o segmento 3 existir, o mesmo será passado àos parãmetros
+         */
+        if ($this->uri->segment(3) == "null")
+        {
+            $dadosBusca = null;
+        }
+        else
+        {
+            $dadosBusca = str_replace("-", " ", $this->uri->segment(3));
+        }
+
+        /**
+         * Dados passados por Get, para gerar a paginação
+         * Se o segmento 4 existir, o mesmo será passado àos parãmetros
+         */
+        if ($this->uri->segment(4) == "")
+        {
+            $inicio = 0;
+        }
+        else
+        {
+            $inicio = $this->uri->segment(4);
+        }
+
+        /*
+         * Parâmetros para a busca e retorno dos 
+         * dados
+         */
+        if ($this->uri->segment(3) != "null")
+        {
+            $parametros = array(
+                "select" => "*, DATE_FORMAT(data_acesso,'%d/%m/%Y %H: %i') as dataAcesso",
+                "table" => "usuarios",
+                "where" => array("lixeira" => 1),
+                "like" => array("nome" => $dadosBusca),
+                "order_by" => "",
+                "group_by" => "",
+                "join" => "",
+                "orlike" => "",
+                "limit" => array($this->qtdRegistros => $inicio)
+            );
+        }
+        else
+        {
+            $parametros = array(
+                "select" => "*, DATE_FORMAT(data_acesso,'%d/%m/%Y %H: %i') as dataAcesso",
+                "table" => "usuarios",
+                "where" => array("lixeira" => 1),
+                "like" => "",
+                "order_by" => "",
+                "group_by" => "",
+                "join" => "",
+                "orlike" => "",
+                "limit" => array($this->qtdRegistros => $inicio)
+            );
+        }
+
+        // Metodo para selecionar e retornar os dados 
+        // mediante os parametros passados
+        $dados = $this->crud->select($parametros, false);
+
+        /*
+         * Retorna a quantidade de registros 
+         */
+        $parametrosCount = array(
+            "select" => "*",
+            "table" => "usuarios",
+            "where" => array("lixeira" => 1),
+            "like" => "",
+            "limit" => "",
+            "order_by" => "",
+            "orlike" => "",
+            "group_by" => "",
+            "join" => ""
+        );
+
+        $qtdRegistros = $this->crud->select($parametrosCount, false);
+
+        // Parâmetros para a biblioteca de paginação
+        $config['base_url'] = base_url() . $this->uri->segment(1) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/";
+        $config['total_rows'] = count($qtdRegistros);
+        $config['uri_segment'] = 4;
+        $config['per_page'] = $this->qtdRegistros;
+        ;
+        $config['first_tag_open'] = '<li>';
+        $config['first_link'] = '<<';
+        $config['first_tag_close'] = '</li>';
+        $config['cur_tag_open'] = "<li class='active'><a href='javascript:void(0)'>";
+        $config['cur_tag_close'] = '</a></li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_link'] = '>>';
+        $config['last_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_link'] = '>';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_link'] = '<';
+        $config['prev_tag_close'] = '</li>';
+        $config['full_tag_open'] = '<div class="pagination pagination-right"><ul>';
+        $config['full_tag_close'] = '</ul></div>  ';
+        $this->pagination->initialize($config);
+        $data['paginacao'] = $this->pagination->create_links();
+        $data['dadosbusca'] = $dados;
+
+        // Pagina secundária
         $data['pagina'] = "lixeira";
         $this->load->view('principal/principal', $data);
     }
@@ -290,7 +420,7 @@ class Usuarios extends MX_Controller {
         // Verifica CPF
         if (!validaCPF($_POST['cpf']))
         {
-            echo '<div class="alert alert-error">
+            echo '<div class="alert alert-error" id="msgout">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   <h4>Erro!</h4>CPF inválido, Por favor, verifique o campos destinado a este dado.
                   </div>';
@@ -300,7 +430,7 @@ class Usuarios extends MX_Controller {
         // Verifica se a senha é maior que 6 digitos e se as duas são iguais
         if ($_POST['senha'] != $_POST['repetirSenha'] || strlen($_POST['repetirSenha']) < 6)
         {
-            echo '<div class="alert alert-error">
+            echo '<div class="alert alert-error" id="msgout">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   <h4>Erro!</h4>Senha redigitada não confere ou contém menos de 6 caracteres
                   </div>';
@@ -341,7 +471,7 @@ class Usuarios extends MX_Controller {
 
         if ($retorno == 1062)
         {
-            echo '<div class="alert alert-error">
+            echo '<div class="alert alert-error" id="msgout">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   <h4>Erro!</h4>O usuário já está cadastrado. Por favor, utilize um email não cadastrado.
                   </div>';
@@ -357,7 +487,7 @@ class Usuarios extends MX_Controller {
             $logs->setLogPath(APPPATH . "logs/" . $retorno[0]->nome . "/");
             $logs->write_log('info', "O usuario cadastrou um novo usuário: " . $_POST['nome']);
 
-            $mensagem = array('mensagem' => '<div class="alert alert-success">
+            $mensagem = array('mensagem' => '<div class="alert alert-success" id="msgout">
                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                                            <h4>Sucesso!</h4>Usuário cadastrado
                                            </div>');
@@ -366,12 +496,250 @@ class Usuarios extends MX_Controller {
         }
         else
         {
-            echo '<div class="alert alert-error">
+            echo '<div class="alert alert-error" id="msgout">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   <h4>Erro!</h4>O usuário não pode ser cadastrado
                   </div>';
             exit;
         }
+    }
+
+    /*
+     * Método para mostrar o alerta de exclusão
+     * Envio para a lixeira
+     */
+
+    public function excluir($id)
+    {
+        $data['pagina'] = "confirmacaoExclusao";
+        $this->load->view('principal/principal', $data);
+    }
+
+    /*
+     * Método para mostrar o alerta de exclusão
+     * Exclusão Permanente
+     */
+
+    public function excluirPermanente($id)
+    {
+        $data['pagina'] = "confirmacaoExclusaoPermanente";
+        $this->load->view('principal/principal', $data);
+    }
+
+    /*
+     * Método para enviar os dados do usuário para a lixeira
+     */
+
+    public function enviarLixiera()
+    {
+        $this->load->model("crud");
+
+        /*
+         * Seleciona o usuário para verificar os dados
+         * se estão corretos
+         */
+        $parametros = array(
+            "select" => "id, senha",
+            "table" => "usuarios",
+            "where" => array("id" => $this->session->userdata('id_usuario')),
+            "like" => "",
+            "order_by" => "",
+            "group_by" => "",
+            "join" => "",
+            "orlike" => "",
+            "limit" => ""
+        );
+
+        // Retorno dos dados do usuário
+        $dados = $this->crud->select($parametros);
+
+        // Verifica se a senha digita é a mesma utilizada pelo usuário
+        if ($dados[0]->senha == md5($_POST['senha']))
+        {
+            // Verifica se o usuário a ser excluido não é o mesmo que está logado
+            if ($_POST['id'] == $this->session->userdata('id_usuario'))
+            {
+                echo '<div class="alert alert-error" id="msgout">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <h4>Erro!</h4>Você não pode excluir o seu próprio usuário.
+                      </div>';
+                exit;
+            }
+
+            // Exclui dados usuário
+            $this->crud->update("usuarios", "id", array("id" => $_POST['id'], "lixeira" => 1));
+
+            // Gerar Logs
+            $this->load->library('my_log');
+            $logs = new MY_Log();
+            $logs->setLogPath(APPPATH . "logs/" . $this->session->userdata('nome') . "/");
+            $logs->write_log('info', "O usuario excluiu um outro usuário com id: " . $_POST['id']);
+
+            $mensagem = array('mensagem' => '<div class="alert alert-success" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Sucesso!</h4>Usuário excluido com Sucesso.
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/gerenciar'</script>";
+        }
+        else
+        {
+            echo '<div class="alert alert-error" id="msgout">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <h4>Erro!</h4>Senha digitada não confere com a senha cadastra no banco de dados
+                  </div>';
+            exit;
+        }
+    }
+
+    /*
+     * Método para enviar os dados do usuário para a lixeira
+     */
+
+    public function deletarDados()
+    {
+        $this->load->model("crud");
+
+        /*
+         * Seleciona o usuário para verificar os dados
+         * se estão corretos
+         */
+        $parametros = array(
+            "select" => "id, senha",
+            "table" => "usuarios",
+            "where" => array("id" => $this->session->userdata('id_usuario')),
+            "like" => "",
+            "order_by" => "",
+            "group_by" => "",
+            "join" => "",
+            "orlike" => "",
+            "limit" => ""
+        );
+
+        // Retorno dos dados do usuário
+        $dados = $this->crud->select($parametros);
+
+        // Verifica se a senha digita é a mesma utilizada pelo usuário
+        if ($dados[0]->senha == md5($_POST['senha']))
+        {
+            // Exclui dados usuário
+            $this->crud->delete("usuarios", "id", array("id" => $_POST['id'], "lixeira" => 1));
+
+            // Gerar Logs
+            $this->load->library('my_log');
+            $logs = new MY_Log();
+            $logs->setLogPath(APPPATH . "logs/" . $this->session->userdata('nome') . "/");
+            $logs->write_log('info', "O usuario excluiu um outro usuário com id: " . $_POST['id']);
+
+            $mensagem = array('mensagem' => '<div class="alert alert-success" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Sucesso!</h4>Usuário excluido com Sucesso.
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/lixeira'</script>";
+        }
+        else
+        {
+            echo '<div class="alert alert-error" id="msgout">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <h4>Erro!</h4>Senha digitada não confere com a senha cadastra no banco de dados
+                  </div>';
+            exit;
+        }
+    }
+
+    /*
+     * Método para mudar o status do usuário 
+     */
+
+    public function status($id, $status)
+    {
+        // Load classe Model
+        // /application/model/crud.php
+        $this->load->model("crud");
+
+        // Verifica se o usuário a ser excluido não é o mesmo que está logado
+        if ($id == $this->session->userdata('id_usuario'))
+        {
+            $mensagem = array('mensagem' => '<div class="alert alert-error" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Erro!</h4> Você não pode desativar seu próprio usuário
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/gerenciar'</script>";
+        }
+        else
+        {
+            // Mudança de status
+            if ($status == 1)
+            {
+                $this->crud->update("usuarios", "id", array("id" => $id, "status" => 2));
+            }
+            else
+            {
+                $this->crud->update("usuarios", "id", array("id" => $id, "status" => 1));
+            }
+
+            $mensagem = array('mensagem' => '<div class="alert alert-success" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Sucesso!</h4> O status do usuário foi modificado.
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/gerenciar'</script>";
+        }
+    }
+
+    /*
+     * Método para restaurar dados da lixeira
+     */
+    public function restaurarDados($id)
+    {
+        $this->load->model("crud");
+        
+        // Modifica os dados da campo lixeira
+        if ($this->crud->update("usuarios", "id", array("id" => $id, "lixeira" => 2)))
+        {
+            // retorna a mensagem de sucesso
+            $mensagem = array('mensagem' => '<div class="alert alert-success" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Sucesso!</h4> Os dados selecionados foram restaurados com sucesso
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/gerenciar'</script>";
+        }
+        else
+        {
+            // Retorna a mensagem de erro
+            $mensagem = array('mensagem' => '<div class="alert alert-error" id="msgout">
+                                             <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                             <h4>Erro!</h4> Os dados não puderam ser restaurados
+                                             </div>');
+            $this->session->set_userdata($mensagem);
+            print "<script>self.location = '" . base_url() . "usuarios/lixeira'</script>";
+        }
+    }
+    
+    public function editar($id)
+    {
+        // Carrega os dados das configuracoes
+        $this->load->model('menu');
+
+        // Gerar Logs
+        $this->load->library('my_log');
+        $logs = new MY_Log();
+        $logs->setLogPath(APPPATH . "logs/" . $this->session->userdata('nome') . "/");
+        $logs->write_log('info', "O usuario acessou a area de atualização de novos usuários");
+
+        // Permissões do usuário
+        $data['menus'] = $this->menu->getIdMenu($this->session->userdata('menu'));
+        $data['qtdMenus'] = $this->menu->getQtdMenuPai($this->session->userdata('menu'));
+        
+        // Retorna os dados do usuario
+        $this->load->model("crud");
+        $data['dados'] = $this->crud->simpleSelect("usuarios", array("id" => $id));
+
+        $data['pagina'] = "atualizar";
+        $this->load->view('principal/principal', $data);
     }
 
 }

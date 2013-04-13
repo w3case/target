@@ -633,3 +633,7 @@ form .widget-content {
     width: 60%;
     margin: -20% 0 0 -27%;
 }
+
+input.span17 {
+    width: 300px;
+}

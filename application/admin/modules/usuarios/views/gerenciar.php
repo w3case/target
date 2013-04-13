@@ -5,6 +5,10 @@
 
 <?php $this->load->view("nav") ?>
 
+<div id="mensagem">
+    <?php echo $this->session->userdata('mensagem'); $this->session->set_userdata(array("mensagem"=>"")); ?>
+</div>
+
 <div class="widget">
     <div class="widget-header">
         <h3>Gerenciar Usuários</h3>
@@ -50,13 +54,14 @@
                         <a href="usuarios/editar/<?php echo $dados->id; ?>" class="btn tooltip-link" data-toggle="tooltip" data-placement="top" title="Editar o cadastro">
                             <i class="icon-pencil"></i>
                         </a>
+                        
                         <?php if ($dados->status == 1){ ?>
-                        <a href="usuarios/status/<?php echo $dados->id; ?>/2" class="btn tooltip-link" data-toggle="tooltip" data-placement="top" title="Desativar/Ativar o cadstro">
-                            <i class="icon-ok"></i>
+                        <a href="usuarios/status/<?php echo $dados->id; ?>/1" class="btn tooltip-link" data-toggle="tooltip" data-placement="top" title="Desativar/Ativar o cadastro">
+                            <i class="icon-plus"></i>
                         </a>
                         <?php } else { ?>
-                        <a href="usuarios/status/<?php echo $dados->id; ?>/1" class="btn tooltip-link" data-toggle="tooltip" data-placement="top" title="Desativar/Ativar o cadstro">
-                            <i class="icon-ok"></i>
+                        <a href="usuarios/status/<?php echo $dados->id; ?>/2" class="btn tooltip-link" data-toggle="tooltip" data-placement="top" title="Desativar/Ativar o cadastro">
+                            <i class="icon-minus"></i>
                         </a>
                         <?php } ?>
 

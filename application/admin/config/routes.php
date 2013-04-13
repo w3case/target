@@ -38,7 +38,7 @@
 |
 */
 
-$route['configuracoes/metas-analytics'] = "configuracoes/metasAnalytics";
+$route['configuracao/metas-analytics'] = "configuracao/metasAnalytics";
 
 $route['default_controller'] = "autenticacao";
 $route['404_override'] = '';

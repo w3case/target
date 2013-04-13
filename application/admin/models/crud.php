@@ -274,6 +274,7 @@ class Crud extends CI_Model
             $this->db->where($id_name, $array[$id_name]);
         }
         $this->db->delete($table);
+        
         if ($this->db->_error_number())
         {
            return $this->db->_error_number(); 
