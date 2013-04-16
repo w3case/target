@@ -28,52 +28,46 @@ class Atualizacoes extends MX_Controller {
 
     public function atualizarSistema()
     {
-        exit;
         $this->load->model('configuracoes');
-        $permissoes = $this->configuracoes->permissoes();
+        $permissoes = $this->configuracoes->getPermissoes();
 
-        if ($permissoes[0]->status == "")
+        /*
+         * Caso o módulo de permissão não esteja ativo, apresenta a mensagem 
+         * de erro
+         */
+        if ($permissoes[0]->status == 2)
         {
-            MsgError("ERRO", "Seu módulo esta desativado, por favor, contate o suporte técnico");
-            exit;
+             echo '<div class="alert alert-error">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <h4>Erro!</h4>Você não possui permissão para atualizar o sistema. Entre em contato com o suporte técnico.
+                  </div>';
+             exit;
         }
+        
+        /*
+         * Caso o usuário não seja administrador, apresenta a mensagem de erro
+         * Somente administradores podem atualizar o sistema
+         */
         if ($this->session->userdata('tipo') > 2)
         {
-            MsgError("ERRO", "Acesso restrito");
-            exit;
+            echo '<div class="alert alert-error">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <h4>Erro!</h4>Você não possui permissão para atualizar o sistema. Entre em contato com o administrador.
+                  </div>';
+             exit;
         }
-
-        // Logs do sistema
-        $this->load->library('logs');
-        $config = array(
-            'path' => 'application/admin/logs/' . $this->session->userdata('usuario') . '/',
-            'tipo' => 'xml',
-            'arquivo' => date('d-m-Y')
-        );
-        $this->logs->inicialize($config);
-        $this->logs->Gerarlog('O usuario ' . $this->session->userdata('usuario') . ' atualizou o sistema');
 
         // Configuracoes
         $this->load->model('configuracoes');
 
-        // Modulos
-        $modulos = $this->configuracoes->modulos();
-        $configs = $this->configuracoes->dados();
-
-        foreach ($modulos as $modulo):
-            copy("http://www.whostbr.com.br/cms/repositorio/" . $configs[0]->height_not . ".0/" . $modulo->modulos . ".zip", $configs[0]->path_raiz . "temp/" . $modulo->modulos . ".zip");
-        endforeach;
-
-        // Copy Librarys e Helps
-        copy("http://www.whostbr.com.br/cms/repositorio/" . $configs[0]->height_not . ".0/helpers.zip", $configs[0]->path_raiz . "temp/helpers.zip");
-        copy("http://www.whostbr.com.br/cms/repositorio/" . $configs[0]->height_not . ".0/libraries.zip", $configs[0]->path_raiz . "temp/libraries.zip");
+        // Carrega o source do sistema para a pasta temporária
+        //copy("http://www.whostbr.com.br/cms/repositorio/4.0/target.zip", $this->configuracoes->getDados("caminhoRaiz") . "temp/target.zip");      
 
         // Limpa a tablea Menu
         $this->load->model('crud');
-        $this->crud->truncante('menu');
 
         // Inclui as configurações
-        include_once 'admin/config.php';
+        include_once '../config/config.php';
 
         // Conectar no ftp
         $this->load->library('ftp');
@@ -84,7 +78,7 @@ class Atualizacoes extends MX_Controller {
         $config['debug'] = TRUE;
 
         // Envia as configuracoes
-        $this->ftp->connect($config);
+        $this->ftp->connect($config); exit;
 
         $this->load->library('my_pclzip');
 

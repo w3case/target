@@ -2029,3 +2029,106 @@ DEBUG - 2013-04-13 09:46:42 --> Atualizacoes MX_Controller Initialized
 DEBUG - 2013-04-13 09:46:42 --> Loader Class Initialized
 DEBUG - 2013-04-13 09:46:42 --> Final output sent to browser
 DEBUG - 2013-04-13 09:46:42 --> Total execution time: 0.0154
+DEBUG - 2013-04-13 10:23:33 --> Config Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Hooks Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Utf8 Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> UTF-8 Support Enabled
+DEBUG - 2013-04-13 10:23:33 --> URI Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Router Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Output Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Security Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Input Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-04-13 10:23:33 --> Language Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Helper loaded: url_helper
+DEBUG - 2013-04-13 10:23:33 --> Helper loaded: functions_helper
+DEBUG - 2013-04-13 10:23:33 --> Helper loaded: text_helper
+DEBUG - 2013-04-13 10:23:33 --> Session Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Helper loaded: string_helper
+DEBUG - 2013-04-13 10:23:33 --> Session routines successfully run
+DEBUG - 2013-04-13 10:23:33 --> Controller Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Language Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Config Class Initialized
+DEBUG - 2013-04-13 10:23:33 --> Atualizacoes MX_Controller Initialized
+DEBUG - 2013-04-13 10:23:33 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Config Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Hooks Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Utf8 Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> UTF-8 Support Enabled
+DEBUG - 2013-04-13 10:24:06 --> URI Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Router Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Output Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Security Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Input Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-04-13 10:24:06 --> Language Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Helper loaded: url_helper
+DEBUG - 2013-04-13 10:24:06 --> Helper loaded: functions_helper
+DEBUG - 2013-04-13 10:24:06 --> Helper loaded: text_helper
+DEBUG - 2013-04-13 10:24:06 --> Session Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Helper loaded: string_helper
+DEBUG - 2013-04-13 10:24:06 --> Session routines successfully run
+DEBUG - 2013-04-13 10:24:06 --> Controller Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Language Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Config Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Atualizacoes MX_Controller Initialized
+DEBUG - 2013-04-13 10:24:06 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Model Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Model Class Initialized
+DEBUG - 2013-04-13 10:24:06 --> Database Driver Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Config Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Hooks Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Utf8 Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> UTF-8 Support Enabled
+DEBUG - 2013-04-13 10:24:10 --> URI Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Router Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> No URI present. Default controller set.
+DEBUG - 2013-04-13 10:24:10 --> Output Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Security Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Input Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-04-13 10:24:10 --> Language Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Helper loaded: url_helper
+DEBUG - 2013-04-13 10:24:10 --> Helper loaded: functions_helper
+DEBUG - 2013-04-13 10:24:10 --> Helper loaded: text_helper
+DEBUG - 2013-04-13 10:24:10 --> Session Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Helper loaded: string_helper
+DEBUG - 2013-04-13 10:24:10 --> Session routines successfully run
+DEBUG - 2013-04-13 10:24:10 --> Controller Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Language Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Config Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> Autenticacao MX_Controller Initialized
+DEBUG - 2013-04-13 10:24:10 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:24:10 --> File loaded: ../application/admin/modules/autenticacao/views/login.php
+DEBUG - 2013-04-13 10:24:10 --> Final output sent to browser
+DEBUG - 2013-04-13 10:24:10 --> Total execution time: 0.0182
+DEBUG - 2013-04-13 10:31:55 --> Config Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Hooks Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Utf8 Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> UTF-8 Support Enabled
+DEBUG - 2013-04-13 10:31:55 --> URI Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Router Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Output Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Security Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Input Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-04-13 10:31:55 --> Language Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Helper loaded: url_helper
+DEBUG - 2013-04-13 10:31:55 --> Helper loaded: functions_helper
+DEBUG - 2013-04-13 10:31:55 --> Helper loaded: text_helper
+DEBUG - 2013-04-13 10:31:55 --> Session Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Helper loaded: string_helper
+DEBUG - 2013-04-13 10:31:55 --> Session routines successfully run
+DEBUG - 2013-04-13 10:31:55 --> Controller Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Language Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Config Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> Atualizacoes MX_Controller Initialized
+DEBUG - 2013-04-13 10:31:55 --> Loader Class Initialized
+DEBUG - 2013-04-13 10:31:55 --> File loaded: ../application/admin/modules/atualizacoes/views/atualizacoes.php
+DEBUG - 2013-04-13 10:31:55 --> File loaded: ../application/admin/modules/principal/views/principal.php
+DEBUG - 2013-04-13 10:31:55 --> Final output sent to browser
+DEBUG - 2013-04-13 10:31:55 --> Total execution time: 0.0175

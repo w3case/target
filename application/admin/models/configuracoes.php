@@ -44,7 +44,8 @@ class Configuracoes extends CI_Model {
     public function getDados($idConfiguracao)
     {
         $query = $this->db->query("SELECT * FROM config where idConfiguracao = '$idConfiguracao'");
-        return $query->result();
+        $return = $query->result();
+        return $return[0]->parametros;
     }
 
 //
@@ -53,9 +54,9 @@ class Configuracoes extends CI_Model {
 //        $query = $this->db->query("UPDATE version SET version_atual = '" . $versao . "'");
 //    }
 //
-//    public function permissoes()
-//    {
-//        $query = $this->db->query("SELECT modulos, status FROM modulos WHERE modulos = 'atualizar_sistema' and status = 1");
-//        return $query->result();
-//    }
+    public function getPermissoes()
+    {
+        $query = $this->db->query("SELECT modulos, status FROM modulos WHERE modulos = 'atualizar_sistema' and status = 1");
+        return $query->result();
+    }
 }
